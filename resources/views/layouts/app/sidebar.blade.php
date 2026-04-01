@@ -15,6 +15,7 @@
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+                    <flux:navlist.item icon="book-open-text" :href="route('blog')" :current="request()->routeIs('blog*')" wire:navigate>{{ __('Blog') }}</flux:navlist.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
@@ -30,7 +31,7 @@
                 </flux:sidebar.item>
             </flux:sidebar.nav>
 
-            <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
+            <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()?->name" />
         </flux:sidebar>
 
         <!-- Mobile User Menu -->

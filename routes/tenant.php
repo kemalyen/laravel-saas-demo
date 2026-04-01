@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Livewire\Blog\CreatePost;
+use App\Livewire\Blog\ListPosts;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -24,7 +26,14 @@ Route::middleware([
     PreventAccessFromCentralDomains::class,
     Stancl\Tenancy\Middleware\ScopeSessions::class,
 ])->group(function () {
-    Route::get('/', function () {
+    /*     Route::get('/', function () {
         return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
+    });
+ */
+    Route::livewire('/', 'home')->name('home');
+    Route::prefix('/dashboard')->middleware(['auth'])->group(function () {
+        Route::view('/', 'dashboard')->name('dashboard');
+        Route::get('blog', ListPosts::class)->name('blog');
+        Route::get('blog/create', CreatePost::class)->name('blog.create');
     });
 });
